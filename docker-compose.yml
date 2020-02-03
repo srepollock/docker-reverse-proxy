@@ -1,0 +1,25 @@
+version: '3'
+services:
+    nginx-proxy:
+        image: jwilder/nginx-proxy
+        ports:
+            - "80:80"
+        volumes:
+            - /var/run/docker.sock:/tmp/docker.sock:ro
+		restart: always
+    nginx:
+        container_name: nginx
+        image: nginx:alpine
+        environment:
+            - VIRTUAL_HOST=docker-nginx
+        expose:
+            - "80"
+        restart: always
+    apache:
+        container_name: apache
+        image: httpd:alpine
+        environment:
+            - VIRTUAL_HOST=docker-apache
+        expose:
+            - "80"
+        restart: always
